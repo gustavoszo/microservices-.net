@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ItemService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250325183552_CreateTables")]
+    [Migration("20250408184119_CreateTables")]
     partial class CreateTables
     {
         /// <inheritdoc />
@@ -27,53 +27,53 @@ namespace ItemService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("IdRestaurante")
+                    b.Property<int>("IdRestaurant")
                         .HasColumnType("int");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<double>("Preco")
+                    b.Property<double>("Price")
                         .HasColumnType("double");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdRestaurante");
+                    b.HasIndex("IdRestaurant");
 
                     b.ToTable("Itens");
                 });
 
-            modelBuilder.Entity("ItemService.Models.Restaurante", b =>
+            modelBuilder.Entity("ItemService.Models.Restaurant", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("IdExterno")
+                    b.Property<int>("IdExternal")
                         .HasColumnType("int");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Restaurantes");
+                    b.ToTable("Restaurants");
                 });
 
             modelBuilder.Entity("ItemService.Models.Item", b =>
                 {
-                    b.HasOne("ItemService.Models.Restaurante", "Restaurante")
+                    b.HasOne("ItemService.Models.Restaurant", "Restaurant")
                         .WithMany("Itens")
-                        .HasForeignKey("IdRestaurante")
+                        .HasForeignKey("IdRestaurant")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Restaurante");
+                    b.Navigation("Restaurant");
                 });
 
-            modelBuilder.Entity("ItemService.Models.Restaurante", b =>
+            modelBuilder.Entity("ItemService.Models.Restaurant", b =>
                 {
                     b.Navigation("Itens");
                 });

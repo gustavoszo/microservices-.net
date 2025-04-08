@@ -9,5 +9,5 @@ public class AppDbContext : DbContext
     {
     }
 
-    public DbSet<Restaurante> Restaurantes { get; set; }
+    public DbSet<Restaurant> Restaurants { get; set; }
 }

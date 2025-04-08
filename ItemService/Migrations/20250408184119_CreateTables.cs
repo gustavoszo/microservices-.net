@@ -15,18 +15,18 @@ namespace ItemService.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Restaurantes",
+                name: "Restaurants",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    IdExterno = table.Column<int>(type: "int", nullable: false),
-                    Nome = table.Column<string>(type: "longtext", nullable: false)
+                    IdExternal = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Restaurantes", x => x.Id);
+                    table.PrimaryKey("PK_Restaurants", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -36,27 +36,27 @@ namespace ItemService.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "longtext", nullable: false)
+                    Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Preco = table.Column<double>(type: "double", nullable: false),
-                    IdRestaurante = table.Column<int>(type: "int", nullable: false)
+                    Price = table.Column<double>(type: "double", nullable: false),
+                    IdRestaurant = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Itens", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Itens_Restaurantes_IdRestaurante",
-                        column: x => x.IdRestaurante,
-                        principalTable: "Restaurantes",
+                        name: "FK_Itens_Restaurants_IdRestaurant",
+                        column: x => x.IdRestaurant,
+                        principalTable: "Restaurants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Itens_IdRestaurante",
+                name: "IX_Itens_IdRestaurant",
                 table: "Itens",
-                column: "IdRestaurante");
+                column: "IdRestaurant");
         }
 
         /// <inheritdoc />
@@ -66,7 +66,7 @@ namespace ItemService.Migrations
                 name: "Itens");
 
             migrationBuilder.DropTable(
-                name: "Restaurantes");
+                name: "Restaurants");
         }
     }
 }

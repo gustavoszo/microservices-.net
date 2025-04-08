@@ -4,6 +4,6 @@ namespace RestauranteService.Clients
 {
     public interface IItemServiceHttpClient
     {
-        public Task EnviaRestauranteParaItemServiceAsync(RestauranteReadDto readDto);
+        public Task SendRestaurantToItemServiceAsync(RestaurantReadDto readDto);
     }
 }

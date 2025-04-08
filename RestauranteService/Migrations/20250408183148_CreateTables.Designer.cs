@@ -10,7 +10,7 @@ using RestauranteService.Data;
 namespace RestauranteService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250325183355_CreateTables")]
+    [Migration("20250408183148_CreateTables")]
     partial class CreateTables
     {
         /// <inheritdoc />
@@ -21,17 +21,17 @@ namespace RestauranteService.Migrations
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("RestauranteService.Models.Restaurante", b =>
+            modelBuilder.Entity("RestauranteService.Models.Restaurant", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Endereco")
+                    b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -41,7 +41,7 @@ namespace RestauranteService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Restaurantes");
+                    b.ToTable("Restaurants");
                 });
 #pragma warning restore 612, 618
         }

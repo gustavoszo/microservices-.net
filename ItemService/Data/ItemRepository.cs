@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using ItemService.Models;
 
 namespace ItemService.Data
@@ -14,39 +12,38 @@ namespace ItemService.Data
             _context = context;
         }
 
-        public void CreateItem(int restauranteId, Item item)
+        public void CreateItem(int restaurantId, Item item)
         {
-            item.IdRestaurante = restauranteId;
+            item.IdRestaurant = restaurantId;
             _context.Itens.Add(item);
         }
 
-        public void CreateRestaurante(Restaurante restaurante)
+        public void CreateRestaurant(Restaurant restaurant)
         {
-            _context.Restaurantes.Add(restaurante);
+            _context.Restaurants.Add(restaurant);
+        }
+        public bool ExternalRestaurantExists(int restaurantExternalId)
+        {
+            return _context.Restaurants.Any(restaurante => restaurante.IdExternal == restaurantExternalId);
         }
 
-        public bool ExisteRestauranteExterno(int idExternoRestaurante)
+        public IEnumerable<Restaurant> GetAllRestaurants()
         {
-            return _context.Restaurantes.Any(restaurante => restaurante.IdExterno == idExternoRestaurante);
+            return _context.Restaurants.ToList();
         }
 
-        public IEnumerable<Restaurante> GetAllRestaurantes()
-        {
-            return _context.Restaurantes.ToList();
-        }
+        public Item GetItem(int restaurantId, int itemId) => _context.Itens
+            .Where(item => item.IdRestaurant == restaurantId && item.Id == itemId).FirstOrDefault();
 
-        public Item GetItem(int restauranteId, int itemId) => _context.Itens
-            .Where(item => item.IdRestaurante == restauranteId && item.Id == itemId).FirstOrDefault();
-
-        public IEnumerable<Item> GetItensDeRestaurante(int restauranteId)
+        public IEnumerable<Item> GetItensByRestaurant(int restaurantId)
         {
             return _context.Itens
-                .Where(item => item.IdRestaurante == restauranteId);
+                .Where(item => item.IdRestaurant == restaurantId);
         }
 
-        public bool RestauranteExiste(int restauranteId)
+        public bool RestaurantExists(int restaurantId)
         {
-            return _context.Restaurantes.Any(restaurante => restaurante.Id == restauranteId);
+            return _context.Restaurants.Any(restaurante => restaurante.Id == restaurantId);
         }
 
         public void SaveChanges()

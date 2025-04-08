@@ -8,14 +8,14 @@ namespace ItemService.Models
         public int Id { get; set; }
 
         [Required]
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        public double Preco { get; set; }
+        public double Price { get; set; }
 
         [Required]
-        public int IdRestaurante { get; set; }
+        public int IdRestaurant { get; set; }
 
-        public Restaurante Restaurante { get; set; }
+        public Restaurant Restaurant { get; set; }
     }
 }

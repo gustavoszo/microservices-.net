@@ -3,8 +3,8 @@ namespace ItemService.Dtos
     public class ItemReadDto
     {
         public int Id { get; set; }
-        public string Nome { get; set; }
-        public double Preco { get; set; }
-        public int IdRestaurante { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
+        public int IdRestaurant { get; set; }
     }
 }

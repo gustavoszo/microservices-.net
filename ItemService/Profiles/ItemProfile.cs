@@ -8,7 +8,7 @@ namespace ItemService.Profiles
     {
         public ItemProfile()
         {
-            CreateMap<Restaurante, RestauranteReadDto>();
+            CreateMap<Restaurant, RestaurantReadDto>();
             CreateMap<ItemCreateDto, Item>();
             CreateMap<Item, ItemCreateDto>();
         }

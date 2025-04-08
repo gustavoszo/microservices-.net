@@ -15,10 +15,10 @@ namespace RestauranteService.Clients
             _configuration = configuration;
         }
 
-        public async Task EnviaRestauranteParaItemServiceAsync(RestauranteReadDto readDto)
+        public async Task SendRestaurantToItemServiceAsync(RestaurantReadDto readDto)
         {
-            var conteudoHttp = new StringContent(JsonSerializer.Serialize(readDto), Encoding.UTF8, "application/json");
-            await _client.PostAsync(_configuration["ItemService"], conteudoHttp);
+            var content = new StringContent(JsonSerializer.Serialize(readDto), Encoding.UTF8, "application/json");
+            await _client.PostAsync(_configuration["ItemService"], content);
         }
     }
 }

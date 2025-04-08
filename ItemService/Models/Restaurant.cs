@@ -3,17 +3,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ItemService.Models
 {
-    public class Restaurante
+    public class Restaurant
     {
         [Key]
         [Required]
         public int Id { get; set; }
 
         [Required]
-        public int IdExterno { get; set; }
+        public int IdExternal { get; set; }
 
         [Required]
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
         public ICollection<Item> Itens { get; set; } = new List<Item>();
     }

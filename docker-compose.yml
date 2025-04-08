@@ -1,11 +1,28 @@
 services:
-  db:
+  restaurante_db:
     image: mysql:8.0.29
     command: mysqld --default-authentication-plugin=mysql_native_password
     environment:
       TZ: America/Sao_Paulo
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: restaurante_db
+      MYSQL_TCP_PORT: 3307
+    expose:
+      - 3307
+    ports:
+      - 3307:3307
+    networks:
+      - microservices-bridge
+    volumes:
+      - mysql_data_restaurante:/var/lib/mysql
+
+  item_db:
+    image: mysql:8.0.29
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: item_db
       MYSQL_TCP_PORT: 3308
     expose:
       - 3308
@@ -14,7 +31,7 @@ services:
     networks:
       - microservices-bridge
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql_data_item:/var/lib/mysql
 
   itemservice:
     build: ./ItemService
@@ -25,7 +42,7 @@ services:
     networks:
       - microservices-bridge
     depends_on:
-      - db
+      - item_db
 
   restauranteservice:
     build: ./RestauranteService
@@ -36,7 +53,7 @@ services:
     networks:
       - microservices-bridge
     depends_on:
-      - db
+      - restaurante_db
 
 
 networks:
@@ -44,4 +61,5 @@ networks:
     driver: bridge
 
 volumes:
-  mysql_data:
+  mysql_data_restaurante:
+  mysql_data_item:

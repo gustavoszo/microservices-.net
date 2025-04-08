@@ -20,54 +20,47 @@ public class ItemController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<ItemReadDto>> GetItensForRestaurante(int restauranteId)
+    public ActionResult<IEnumerable<ItemReadDto>> GetItensByRestaurant(int restaurantId)
     {
 
-        if (!_repository.RestauranteExiste(restauranteId))
+        if (!_repository.RestaurantExists(restaurantId))
         {
             return NotFound();
         }
 
-        var itens = _repository.GetItensDeRestaurante(restauranteId);
+        var itens = _repository.GetItensByRestaurant(restaurantId);
 
         return Ok(_mapper.Map<IEnumerable<ItemReadDto>>(itens));
     }
 
-    [HttpGet("{ItemId}", Name = "GetItemForRestaurante")]
-    public ActionResult<ItemReadDto> GetItemForRestaurante(int restauranteId, int itemId)
+    [HttpGet("{ItemId}", Name = "GetItemByRestaurant")]
+    public ActionResult<ItemReadDto> GetItemByRestaurant(int restaurantId, int itemId)
     {
-        if (!_repository.RestauranteExiste(restauranteId))
+        if (!_repository.RestaurantExists(restaurantId))
         {
             return NotFound();
         }
 
-        var item = _repository.GetItem(restauranteId, itemId);
-
-        if (item == null)
-        {
-            return NotFound();
-        }
+        var item = _repository.GetItem(restaurantId, itemId);
+        if (item == null) return NotFound();
 
         return Ok(_mapper.Map<ItemReadDto>(item));
     }
 
     [HttpPost]
-    public ActionResult<ItemReadDto> CreateItemForRestaurante(int restauranteId, ItemCreateDto itemDto)
+    public ActionResult<ItemReadDto> CreateItemForRestaurant(int restaurantId, ItemCreateDto itemDto)
     {
-        if (!_repository.RestauranteExiste(restauranteId))
-        {
-            return NotFound();
-        }
+        if (!_repository.RestaurantExists(restaurantId)) return NotFound();
 
         var item = _mapper.Map<Item>(itemDto);
 
-        _repository.CreateItem(restauranteId, item);
+        _repository.CreateItem(restaurantId, item);
         _repository.SaveChanges();
 
         var itemReadDto = _mapper.Map<ItemReadDto>(item);
 
-        return CreatedAtRoute(nameof(GetItemForRestaurante),
-            new { restauranteId, ItemId = itemReadDto.Id }, itemReadDto);
+        return CreatedAtRoute(nameof(GetItemByRestaurant),
+            new { restaurantId, ItemId = itemReadDto.Id }, itemReadDto);
     }
 
 }

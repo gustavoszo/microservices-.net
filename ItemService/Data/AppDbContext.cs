@@ -10,21 +10,21 @@ namespace ItemService.Data
 
         }
 
-        public DbSet<Restaurante> Restaurantes { get; set; }
+        public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Item> Itens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<Restaurante>()
+                .Entity<Restaurant>()
                 .HasMany(c => c.Itens)
-                .WithOne(i => i.Restaurante!);
+                .WithOne(i => i.Restaurant!);
 
             modelBuilder
                 .Entity<Item>()
-                .HasOne(i => i.Restaurante)
+                .HasOne(i => i.Restaurant)
                 .WithMany(r => r.Itens)
-                .HasForeignKey(i => i.IdRestaurante);
+                .HasForeignKey(i => i.IdRestaurant);
         }
     }
 }

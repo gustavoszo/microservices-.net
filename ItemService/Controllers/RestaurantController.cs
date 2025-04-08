@@ -7,34 +7,34 @@ namespace ItemService.Controllers;
 
 [Route("api/item/[controller]")]
 [ApiController]
-public class RestauranteController : ControllerBase
+public class RestaurantController : ControllerBase
 {
     private readonly IItemRepository _repository;
     private readonly IMapper _mapper;
 
-    public RestauranteController(IItemRepository repository, IMapper mapper)
+    public RestaurantController(IItemRepository repository, IMapper mapper)
     {
         _repository = repository;
         _mapper = mapper;
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<RestauranteReadDto>> GetRestaurantes()
+    public ActionResult<IEnumerable<RestaurantReadDto>> GetRestaurants()
     {
-        var restaurantes = _repository.GetAllRestaurantes();
+        var restaurants = _repository.GetAllRestaurants();
 
-        return Ok(_mapper.Map<IEnumerable<RestauranteReadDto>>(restaurantes));
+        return Ok(_mapper.Map<IEnumerable<RestaurantReadDto>>(restaurants));
     }
 
     [HttpPost]
-    public ActionResult RecebeRestauranteDoRestauranteService(RestauranteReadDto dto)
+    public ActionResult ReceiveRestaurantFromRestaurantService(RestaurantReadDto dto)
     {
         Console.WriteLine(dto.Id);
         return Ok();
     }
 
     [HttpGet("teste")]
-    public ActionResult Teste()
+    public ActionResult Test()
     {
         Console.WriteLine("Requisição bem sucedida");
         return Ok("OK");

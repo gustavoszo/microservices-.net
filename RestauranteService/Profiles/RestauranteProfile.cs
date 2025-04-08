@@ -8,8 +8,8 @@ namespace RestauranteService.Profiles
     {
         public RestauranteProfile()
         {
-            CreateMap<Restaurante, RestauranteReadDto>();
-            CreateMap<RestauranteCreateDto, Restaurante>();
+            CreateMap<Restaurant, RestaurantReadDto>();
+            CreateMap<RestaurantCreateDto, Restaurant>();
         }
     }
 }

@@ -2,12 +2,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RestauranteService.Dtos
 {
-    public class RestauranteCreateDto
+    public class RestaurantCreateDto
     {
         [Required]
-        public string Nome { get; set; }
+        public string Name { get; set; }
         [Required]
-        public string Endereco { get; set; }
+        public string Address { get; set; }
         [Required]
         public string Site { get; set; }
     }

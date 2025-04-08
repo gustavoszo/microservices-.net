@@ -7,12 +7,12 @@ public interface IItemRepository
 {
     void SaveChanges();
 
-    IEnumerable<Restaurante> GetAllRestaurantes();
-    void CreateRestaurante(Restaurante restaurante);
-    bool RestauranteExiste(int restauranteId);
-    bool ExisteRestauranteExterno(int restauranteIdExterno);
+    IEnumerable<Restaurant> GetAllRestaurants();
+    void CreateRestaurant(Restaurant restaurant);
+    bool RestaurantExists(int restaurantId);
+    bool ExternalRestaurantExists(int restauranteIdExterno);
 
-    IEnumerable<Item> GetItensDeRestaurante(int restauranteId);
-    Item GetItem(int restauranteId, int itemId);
-    void CreateItem(int restauranteId, Item item);
+    IEnumerable<Item> GetItensByRestaurant(int restaurantId);
+    Item GetItem(int restaurantId, int itemId);
+    void CreateItem(int restaurantId, Item item);
 }
