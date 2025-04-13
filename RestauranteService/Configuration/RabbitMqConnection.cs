@@ -22,6 +22,8 @@ public class RabbitMqConnection : IAsyncDisposable
         {
             HostName = _configuration["RabbitMQHost"],
             Port = Int32.Parse(_configuration["RabbitMQPort"]),
+            UserName = _configuration["RabbitMQUser"],
+            Password = _configuration["RabbitMQPassword"]
         };
 
         Connection = await factory.CreateConnectionAsync();

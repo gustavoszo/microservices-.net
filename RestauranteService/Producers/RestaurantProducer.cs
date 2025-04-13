@@ -16,7 +16,7 @@ namespace RestauranteService.Producers
         {
             _rabbitMQ = rabbit;
             _configuration = configuration;
-            _exchange = _configuration["broker.exchange.restauarant.name"];
+            _exchange = _configuration["broker.exchange.restaurant.name"];
         }
 
         public async Task SendRestaurant(RestaurantReadDto restauranteReadDto)

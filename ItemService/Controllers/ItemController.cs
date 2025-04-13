@@ -6,7 +6,7 @@ using ItemService.Models;
 
 namespace ItemService.Controllers;
 
-[Route("api/item/restaurante/{restauranteId}/[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class ItemController : ControllerBase
 {

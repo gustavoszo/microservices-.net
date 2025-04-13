@@ -1,29 +1,33 @@
-﻿using RabbitMQ.Client;
+﻿using AutoMapper;
+using ItemService.Data;
+using ItemService.Dtos;
+using ItemService.Models;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RestauranteService.Configuration;
 using System.Text;
+using System.Text.Json;
 
 namespace ItemService.Consumers
 {
     public class ItemConsumer : BackgroundService
     {
-        private readonly RabbitMqConnection _rabbitMQ;
-        private readonly ILogger _logger;
-        private IConfiguration _configuration;
-        private string _queue;
+        private readonly ILogger<ItemConsumer> _logger;
+        private readonly IConfiguration _configuration;
 
-        public ItemConsumer(RabbitMqConnection rabbit, ILogger logger, IConfiguration configuration)
+        private readonly RabbitMqConnection _rabbitMQ;
+        private readonly string _queue;
+
+        public ItemConsumer(RabbitMqConnection rabbit, ILogger<ItemConsumer> logger, IConfiguration configuration)
         {
-            _rabbitMQ = rabbit;
             _logger = logger;
             _configuration = configuration;
+            _rabbitMQ = rabbit;
             _queue = _configuration["broker.queue.item.name"];
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await _rabbitMQ.InitializeAsync();
-
             var consumer = new AsyncEventingBasicConsumer(_rabbitMQ.Channel);
 
             // Esse é o evento assíncrono que será chamado sempre que uma nova mensagem chegar da fila.
@@ -65,7 +69,7 @@ namespace ItemService.Consumers
 
         private void ProcessMessage(string message)
         {
-
+            
         }
 
         public override async Task StopAsync(CancellationToken cancellationToken)

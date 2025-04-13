@@ -4,6 +4,7 @@ using RestauranteService.Clients;
 using RestauranteService.Data;
 using RestauranteService.Dtos;
 using RestauranteService.Models;
+using RestauranteService.Producers;
 
 namespace RestauranteService.Controllers;
 
@@ -13,14 +14,15 @@ public class RestaurantController : ControllerBase
 {
     private readonly IRestaurantRepository _restaurantRepository;
     private readonly IMapper _mapper;
-    private IItemServiceHttpClient _itemServiceHttpClient;
+    private readonly RestaurantProducer _restaurantProducer;
+    private readonly ILogger<RestaurantController> _logger;
 
-    public RestaurantController(IRestaurantRepository repository, IMapper mapper, 
-        IItemServiceHttpClient itemServiceHttpClient)
+    public RestaurantController(IRestaurantRepository repository, IMapper mapper, RestaurantProducer restaurantProducer, ILogger<RestaurantController> logger)
     {
         _restaurantRepository = repository;
         _mapper = mapper;
-        _itemServiceHttpClient = itemServiceHttpClient;
+        _restaurantProducer = restaurantProducer;
+        _logger = logger;   
     }
 
     [HttpGet]
@@ -52,7 +54,7 @@ public class RestaurantController : ControllerBase
         _restaurantRepository.SaveChanges();
 
         var restaurantReadDto = _mapper.Map<RestaurantReadDto>(restaurant);
-        await _itemServiceHttpClient.SendRestaurantToItemServiceAsync(restaurantReadDto);
+        await _restaurantProducer.SendRestaurant(restaurantReadDto);
 
         return CreatedAtRoute(nameof(GetRestaurantById), new { restaurantReadDto.Id }, restaurantReadDto);
     }

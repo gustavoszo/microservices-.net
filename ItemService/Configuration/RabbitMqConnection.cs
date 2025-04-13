@@ -17,6 +17,7 @@ namespace RestauranteService.Configuration
             _configuration = configuration;
             _exchange = _configuration["broker.exchange.restaurant.name"];
             _queue = _configuration["broker.queue.item.name"];
+
         }
 
         public async Task InitializeAsync()
@@ -25,6 +26,8 @@ namespace RestauranteService.Configuration
             {
                 HostName = _configuration["RabbitMQHost"],
                 Port = Int32.Parse(_configuration["RabbitMQPort"]),
+                UserName = _configuration["RabbitMQUser"],
+                Password = _configuration["RabbitMQPassword"]
             };
 
             Connection = await factory.CreateConnectionAsync();

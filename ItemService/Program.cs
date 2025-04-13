@@ -1,3 +1,4 @@
+using ItemService.Consumers;
 using ItemService.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -22,6 +23,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddSingleton<RabbitMqConnection>();
+builder.Services.AddHostedService<RabbitMqInitializer>();
+builder.Services.AddHostedService<ItemConsumer>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSwaggerGen(c =>

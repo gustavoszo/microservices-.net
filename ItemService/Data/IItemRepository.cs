@@ -10,7 +10,6 @@ public interface IItemRepository
     IEnumerable<Restaurant> GetAllRestaurants();
     void CreateRestaurant(Restaurant restaurant);
     bool RestaurantExists(int restaurantId);
-    bool ExternalRestaurantExists(int restauranteIdExterno);
 
     IEnumerable<Item> GetItensByRestaurant(int restaurantId);
     Item GetItem(int restaurantId, int itemId);

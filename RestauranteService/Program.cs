@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using RestauranteService.Clients;
 using RestauranteService.Configuration;
 using RestauranteService.Data;
+using RestauranteService.Producers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
 builder.Services.AddSingleton<RabbitMqConnection>();
+builder.Services.AddHostedService<RabbitMqInitializer>();
+
+builder.Services.AddScoped<RestaurantProducer>();
 
 builder.Services.AddHttpClient<IItemServiceHttpClient, ItemServiceHttpClient>();
 

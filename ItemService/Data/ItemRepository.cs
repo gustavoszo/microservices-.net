@@ -22,9 +22,9 @@ namespace ItemService.Data
         {
             _context.Restaurants.Add(restaurant);
         }
-        public bool ExternalRestaurantExists(int restaurantExternalId)
+        public bool RestaurantExists(int restaurantId)
         {
-            return _context.Restaurants.Any(restaurante => restaurante.IdExternal == restaurantExternalId);
+            return _context.Restaurants.Any(restaurante => restaurante.Id == restaurantId);
         }
 
         public IEnumerable<Restaurant> GetAllRestaurants()
@@ -39,11 +39,6 @@ namespace ItemService.Data
         {
             return _context.Itens
                 .Where(item => item.IdRestaurant == restaurantId);
-        }
-
-        public bool RestaurantExists(int restaurantId)
-        {
-            return _context.Restaurants.Any(restaurante => restaurante.Id == restaurantId);
         }
 
         public void SaveChanges()
