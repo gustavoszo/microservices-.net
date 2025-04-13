@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using ItemService.Data;
+﻿using ItemService.Data;
 using ItemService.Dtos;
 using ItemService.Models;
 using RabbitMQ.Client;
@@ -12,16 +11,19 @@ namespace ItemService.Consumers
 {
     public class ItemConsumer : BackgroundService
     {
+        private readonly IServiceScopeFactory _scopeFactory;
         private readonly ILogger<ItemConsumer> _logger;
         private readonly IConfiguration _configuration;
 
         private readonly RabbitMqConnection _rabbitMQ;
         private readonly string _queue;
 
-        public ItemConsumer(RabbitMqConnection rabbit, ILogger<ItemConsumer> logger, IConfiguration configuration)
+        public ItemConsumer(RabbitMqConnection rabbit, ILogger<ItemConsumer> logger, IConfiguration configuration, IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
             _configuration = configuration;
+            _scopeFactory = scopeFactory;
+
             _rabbitMQ = rabbit;
             _queue = _configuration["broker.queue.item.name"];
         }
@@ -69,7 +71,14 @@ namespace ItemService.Consumers
 
         private void ProcessMessage(string message)
         {
-            
+            using var scope = _scopeFactory.CreateScope();
+            var itemRepository = scope.ServiceProvider.GetRequiredService<IItemRepository>();
+
+            var restaurantReadDto = JsonSerializer.Deserialize<RestaurantReadDto>(message);
+            Restaurant restaurant = new Restaurant() { IdExternal = restaurantReadDto.Id, Name = restaurantReadDto.Name };
+
+            itemRepository.CreateRestaurant(restaurant);
+            itemRepository.SaveChanges();
         }
 
         public override async Task StopAsync(CancellationToken cancellationToken)
